@@ -4,7 +4,7 @@ load("//package:rules.bzl", "pkg_executable")
 py_binary(
     name = "bin",
     srcs = glob(["src/**/*.py"]),
-    data = ["@bazel_watcher//ibazel"],
+    data = ["//ibazel:bin"],
     imports = ["src"],
     legacy_create_init = False,
     main = "src/rivetbazelutil/bazelwatchrun/__main__.py",

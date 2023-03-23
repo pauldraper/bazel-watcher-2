@@ -28,7 +28,17 @@ http_archive(
     strip_prefix = "rivet-bazel-util-%s" % RIVET_BAZEL_UTIL_VERSION,
     url = "https://github.com/rivethealth/rivet-bazel-util/archive/%s.tar.gz" % RIVET_BAZEL_UTIL_VERSION,
 )
+
+load("@rivet_bazel_util//ibazel:workspace.bzl", "ibazel_repositories", "ibazel_toolchains")
+
+ibazel_repositories()
+
+ibazel_toolchains()
 ```
+
+The `@rivet_bazel_util//ibazel:toolchain_type` toolchain will download a
+pre-build executable of ibazel, if it exists. Otherwise, it will rely on
+`@bazel-watcher` repo to build from source.
 
 </details>
 

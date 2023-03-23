@@ -39,35 +39,19 @@ load("@rules_pkg//:deps.bzl", "rules_pkg_dependencies")
 rules_pkg_dependencies()
 
 # Go
-GO_VERSION = "v0.24.5"
+GO_VERSION = "v0.38.1"
 
 http_archive(
     name = "io_bazel_rules_go",
-    sha256 = "d1ffd055969c8f8d431e2d439813e42326961d0942bdf734d2c95dc30c369566",
-    url = "https://github.com/bazelbuild/rules_go/releases/download/%s/rules_go-%s.tar.gz" % (GO_VERSION, GO_VERSION),
+    sha256 = "dd926a88a564a9246713a9c00b35315f54cbd46b31a26d5d8fb264c07045f05d",
+    url = "https://github.com/bazelbuild/rules_go/releases/download/%s/rules_go-%s.zip" % (GO_VERSION, GO_VERSION),
 )
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
-go_register_toolchains()
-
-# Gazelle
-
-GAZELLE_VERSION = "v0.24.0"
-
-http_archive(
-    name = "bazel_gazelle",
-    sha256 = "de69a09dc70417580aabf20a28619bb3ef60d038470c7cf8442fafcf627c21cb",
-    urls = [
-        "https://github.com/bazelbuild/bazel-gazelle/releases/download/%s/bazel-gazelle-%s.tar.gz" % (GAZELLE_VERSION, GAZELLE_VERSION),
-    ],
-)
-
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
-
-gazelle_dependencies()
+go_register_toolchains(version = "1.19.5")
 
 # Protobuf
 http_archive(
@@ -134,11 +118,11 @@ file_repositories()
 
 # JavaScript
 
-JAVASCRIPT_VERSION = "a278dd6e24fbe28b0dde73a6ec1d267b827fab41"
+JAVASCRIPT_VERSION = "0901c7fb3f6205d42e9db372f4ebc575da3e6f6d"
 
 http_archive(
     name = "better_rules_javascript",
-    sha256 = "f4b75ae6f3f1a2c2e0739399a7373cea3ba591a4526b9593ae2f33f5904c6a7e",
+    sha256 = "44b8b79cbca7b89288a605b45aab57465a840d5cdab1bfe9789d17a640d9b0ec",
     strip_prefix = "rules_javascript-%s" % JAVASCRIPT_VERSION,
     url = "https://github.com/rivethealth/rules_javascript/archive/%s.tar.gz" % JAVASCRIPT_VERSION,
 )
@@ -147,22 +131,13 @@ load("@better_rules_javascript//rules:workspace.bzl", javascript_repositories = 
 
 javascript_repositories()
 
-# Bazel Watcher
-
-BAZEL_WATCHER_VERSION = "f672f1b1c48d48052b57a3d27af118bbc8f9d3e4"
-
-http_archive(
-    name = "bazel_watcher",
-    sha256 = "68b2c09af9b5a8debc5dd5ac43c8a4eaf5693bec757481951f2cf5fae8d7b0a3",
-    strip_prefix = "bazel-watcher-%s" % BAZEL_WATCHER_VERSION,
-    url = "https://github.com/bazelbuild/bazel-watcher/archive/%s.tar.gz" % BAZEL_WATCHER_VERSION,
-)
-
-load("@bazel_watcher//:repositories.bzl", "go_repositories")
-
-go_repositories()
-
 # Rivet Bazel Util
+
+load("//ibazel:workspace.bzl", "ibazel_repositories", "ibazel_toolchains")
+
+ibazel_repositories()
+
+ibazel_toolchains()
 
 load("@rules_file//file:workspace.bzl", "files")
 

@@ -1,0 +1,18 @@
+load("//ibazel:ibazel.bzl", "IBAZEL_REPO_NAMES")
+load("//ibazel:rules.bzl", "ibazel_toolchain")
+
+[
+    ibazel_toolchain(
+        name = name,
+        ibazel = "@ibazel_%s//file" % name,
+        visibility = ["//visibility:public"],
+    )
+    for name
+    in IBAZEL_REPO_NAMES
+]
+
+ibazel_toolchain(
+    name = "src",
+    ibazel = "@bazel-watcher//cmd/ibazel",
+    visibility = ["//visibility:public"]
+)

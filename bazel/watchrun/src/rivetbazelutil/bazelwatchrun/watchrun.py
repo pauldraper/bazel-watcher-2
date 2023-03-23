@@ -96,7 +96,7 @@ def _ibazel(ibazel_args, bazel_args, targets):
 
     process = subprocess.Popen(
         [
-            r.Rlocation("bazel_watcher/ibazel/ibazel_/ibazel"),
+            r.Rlocation("rivet_bazel_util/ibazel/bin"),
             f"-profile_dev=/dev/fd/{pipe_write}",
         ]
         + ibazel_args
@@ -127,7 +127,11 @@ def run(
     width: typing.Optional[int],
 ):
     if width is None:
-        width = max(len(aliases.get(target, target)) for target in targets)
+        width = (
+            max(len(aliases.get(target, target)) for target in targets)
+            if targets
+            else 80
+        )
 
     try:
         if not targets:
