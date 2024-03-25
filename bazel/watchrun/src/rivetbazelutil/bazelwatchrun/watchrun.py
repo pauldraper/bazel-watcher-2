@@ -99,12 +99,12 @@ def _ibazel(ibazel_args, bazel_args, targets):
             r.Rlocation("bazel_watcher/ibazel/ibazel_/ibazel"),
             f"-profile_dev=/dev/fd/{pipe_write}",
         ]
-        + ibazel_args
         + [
             "build",
             "--aspects=@rivet_bazel_util//bazel:aspects.bzl%digest",
             "--output_groups=+digest",
         ]
+        + ibazel_args
         + bazel_args
         + targets,
         pass_fds=[pipe_write],
