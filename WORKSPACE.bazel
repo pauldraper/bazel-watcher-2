@@ -25,11 +25,11 @@ http_archive(
 
 # Pkg
 
-PKG_VERSION = "5602b1e788b875053084cc9068b5ce2a4dc817e1"
+PKG_VERSION = "e7a1ba187c96df78d83f1adb0eac1b7db24f96bc"
 
 http_archive(
     name = "rules_pkg",
-    sha256 = "6ea5b1810138bdc43fa947c7a2f8cfe93677c9fd2b783335b0a390628e164d24",
+    sha256 = "468b63f58ebee5287ce6ae0762e3b2893508924f5badb0f3ab73382ead6bdf94",
     strip_prefix = "rules_pkg-%s" % PKG_VERSION,
     url = "https://github.com/bazelbuild/rules_pkg/archive/%s.tar.gz" % PKG_VERSION,
 )
@@ -134,11 +134,11 @@ file_repositories()
 
 # JavaScript
 
-JAVASCRIPT_VERSION = "a278dd6e24fbe28b0dde73a6ec1d267b827fab41"
+JAVASCRIPT_VERSION = "0696c8d74fafe9ef96f6fcddeefab33aa97176c5"
 
 http_archive(
     name = "better_rules_javascript",
-    sha256 = "f4b75ae6f3f1a2c2e0739399a7373cea3ba591a4526b9593ae2f33f5904c6a7e",
+    sha256 = "bf5a5fd551891e7b4bfd133e34108d064004e96ddcb0294882f97b906311e53f",
     strip_prefix = "rules_javascript-%s" % JAVASCRIPT_VERSION,
     url = "https://github.com/rivethealth/rules_javascript/archive/%s.tar.gz" % JAVASCRIPT_VERSION,
 )
