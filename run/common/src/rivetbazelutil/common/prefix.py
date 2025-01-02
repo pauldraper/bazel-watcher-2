@@ -39,7 +39,7 @@ def run_process(args, name, width, display_code=False, process_options={}):
         )
     except OSError as e:
         print(_prefix + str(e), file=sys.stderr)
-        yield None
+        raise e
     stdout_thread = threading.Thread(
         target=_prepend, args=(process.stdout, sys.stdout, prefix)
     )
