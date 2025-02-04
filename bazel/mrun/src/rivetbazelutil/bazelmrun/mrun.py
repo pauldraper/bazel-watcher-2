@@ -19,8 +19,8 @@ def _run_one(workspace, execution_root, executable, name, width):
         width=width,
         workspace=workspace,
     )
-    # wait for process
     with p as process:
+        process.wait()
         return process.returncode
 
 
