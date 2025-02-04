@@ -20,8 +20,8 @@ def _run_one(workspace, execution_root, executable, name, width):
         workspace=workspace,
     )
     with p as process:
-        pass
-    return process.returncode
+        process.wait()
+        return process.returncode
 
 
 def run(aliases, targets, width, bazel_args, parallelism):
@@ -43,7 +43,7 @@ def run(aliases, targets, width, bazel_args, parallelism):
 
     client.build(targets, options=bazel_args)
 
-    code = 0
+    mrun_return_code = 0
     with futures.ThreadPoolExecutor(max_workers=parallelism) as executor:
         futures_ = [
             executor.submit(
@@ -57,9 +57,16 @@ def run(aliases, targets, width, bazel_args, parallelism):
             for target, executable in zip(targets, executables)
         ]
         for future in futures.as_completed(futures_):
+            # Error handling for subprocess(es):
+            # * Failed to spawn: We get `None` here and return 127
+            # * Non-zero exit code(s): We use the first one as our return code
+            # * Unhandled Python exception: Gets reraised by `future.result()`
+            #   and prints stacktrace to here when subprocesses are done
             result = future.result()
             if result is None:
-                code = 127
-            elif result and not code:
-                code = result
-    sys.exit(code)
+                mrun_return_code = 127
+            elif result and not mrun_return_code:
+                mrun_return_code = result
+    if mrun_return_code != 0:
+        print("One or more mrun targets failed; search log for Exit and Fail for details")
+    sys.exit(mrun_return_code)

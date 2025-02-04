@@ -37,8 +37,8 @@ def run_process(args, name, width, display_code=False, process_options={}):
             stdout=subprocess.PIPE,
             **process_options,
         )
-    except OsError as e:
-        print(_prefix + str(e), file=sys.stderr)
+    except OSError as e:
+        print(_prefix + "Failed to open subprocess: " + str(e), file=sys.stderr)
         yield None
     stdout_thread = threading.Thread(
         target=_prepend, args=(process.stdout, sys.stdout, prefix)
